@@ -12,6 +12,8 @@ Function GeneratePassword
             Get-Random -Count $PasswordLength) -replace ' ')
        }    until ($Password -cmatch $Regex)
 
-    $Password
+    Get-Random -InputObject ($Password, ($Password[-1..-($Password.length)] -join ""))
 
 }
+
+GeneratePassword
