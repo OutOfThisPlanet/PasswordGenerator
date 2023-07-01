@@ -12,8 +12,13 @@ Function GeneratePassword
             Get-Random -Count $PasswordLength) -replace ' ')
        }    until ($Password -cmatch $Regex)
 
-    Get-Random -InputObject ($Password, ($Password[-1..-($Password.length)] -join ""))
+    $Reverse =  ($Password[-1..-($Password.length)] -join "")
+    $Shuffle = ($Password.GetEnumerator() | Sort-Object {Get-Random}) -join $_
+
+    Get-Random -InputObject ($Password, $Reverse, $Shuffle)
 
 }
 
 GeneratePassword
+
+
