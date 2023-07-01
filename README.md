@@ -1,5 +1,6 @@
 # PasswordGenerator
-Generates a password, then outputs it, or a reversed version of it. 
+Generates a password, then outputs it, a reversed version, or a shuffled version of it. 
+
 ```
 Function GeneratePassword
 {
@@ -15,8 +16,10 @@ Function GeneratePassword
             Get-Random -Count $PasswordLength) -replace ' ')
        }    until ($Password -cmatch $Regex)
 
-    Get-Random -InputObject ($Password, ($Password[-1..-($Password.length)] -join ""))
+    $Reverse =  ($Password[-1..-($Password.length)] -join "")
+    $Shuffle = ($Password.GetEnumerator() | Sort-Object {Get-Random}) -join $_
 
+    Get-Random -InputObject ($Password, $Reverse, $Shuffle)
 }
 
 GeneratePassword
